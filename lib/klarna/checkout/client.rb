@@ -60,9 +60,8 @@ module Klarna
         Order.new(JSON.parse(response.body))
       end
 
-      def update_status(order_id)
+      def update_status(order_id, request_body)
         path  = "/checkout/orders/#{order_id}"
-        request_body = "{'status':'created'}"
         response = https_connection.post do |req|
           req.url path
 
