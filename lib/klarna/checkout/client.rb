@@ -114,6 +114,10 @@ module Klarna
 
           req.body = request_body
         end
+        p "RESPONSE STATUS"
+        p response.status
+        p "RESPONSE BODY"
+        p response.body
         handle_status_code(response.status, response.body)
         response
       end
