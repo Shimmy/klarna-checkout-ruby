@@ -61,7 +61,7 @@ module Klarna
       end
 
       def update_order(order)
-        return false unless order.valid?
+        #return false unless order.valid?
 
         response = write_order(order)
         Order.new(JSON.parse(response.body))
