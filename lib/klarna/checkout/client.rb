@@ -60,6 +60,27 @@ module Klarna
         Order.new(JSON.parse(response.body))
       end
 
+      def update_status(order_id)
+        path  = "/checkout/orders/#{order_id}"
+        request_body = "{'status':'created'}"
+        response = https_connection.post do |req|
+          req.url path
+
+          req.headers['Authorization']   = "Klarna #{sign_payload(request_body)}"
+          req.headers['Accept']          = 'application/vnd.klarna.checkout.aggregated-order-v2+json',
+          req.headers['Content-Type']    = 'application/vnd.klarna.checkout.aggregated-order-v2+json'
+          req.headers['Accept-Encoding'] = ''
+
+          req.body = request_body
+        end
+        p "RESPONSE STATUS"
+        p response.status
+        p "RESPONSE BODY"
+        p response.body
+        handle_status_code(response.status, response.body)
+        response
+      end
+      
       def update_order(order)
         #return false unless order.valid?
 
